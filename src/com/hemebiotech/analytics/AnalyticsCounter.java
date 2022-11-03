@@ -1,43 +1,43 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class AnalyticsCounter {
 	public TreeMap<String, Integer> symptoms = new TreeMap<>();
 	
 	public static void main(String args[]) throws Exception {
+		// Declaring a map collection		
 		TreeMap<String, Integer> symptoms = new TreeMap<>();
 		
-		try {
-			// Opening the file containing the list of the symptoms
-			BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-			
-			// reading the first symptom
-			String line = reader.readLine();
-	
+		List<String> ListSymptoms = new ArrayList<String>();		
 
-			
-			// Reading sequentially the file "symptoms.txt"
-						while (line != null) {
-						
-							if  (symptoms.containsKey(line)) {
-								symptoms.put(line, symptoms.get(line)+1);
-							}
-							else {
-								symptoms.put(line, 1);
-							}
+		// Reading the file symptoms
+		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");			
 
-							line = reader.readLine();	// get another symptom
-						}
-			reader.close();
+		// Retrieving the list of symptoms in a array		
+		ListSymptoms = readSymptomDataFromFile.GetSymptoms();		
 		
-		} catch (IOException e) {e.printStackTrace();}			
+		// Filling the map collection of the symptoms
+				String symptom;
+				for (int i = 0; i<ListSymptoms.size(); i++)
+				{
+					symptom = ListSymptoms.get(i);
+					
+					// incrementing counter of symptom
+					if  (symptoms.containsKey(symptom)) {
+						symptoms.put(symptom, symptoms.get(symptom)+1);
+					}
+					// adding the symptom in the map collection
+					else {
+						symptoms.put(symptom, 1);
+					}
+				}
 
-		// generate output
+		// Writing the results in the file "result.out"
 		try {
 			FileWriter writer = new FileWriter ("result.out");		
 			writer.write(symptoms.toString());
