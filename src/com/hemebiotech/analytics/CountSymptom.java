@@ -2,7 +2,11 @@ package com.hemebiotech.analytics;
 
 import java.util.List;
 import java.util.TreeMap;
-
+/**
+ * 
+ * @author Said
+ *
+ */
 public class CountSymptom {
 	
 	TreeMap<String, Integer> count(List<String> listSymptoms){
