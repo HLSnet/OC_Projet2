@@ -1,17 +1,15 @@
 package com.hemebiotech.analytics;
 
-import java.util.TreeMap;
+
 
 /**
- * Anything that will write symptom data from a source
- * The important part is, the parameter transmitted to the operation, which is a Map of <strings, Integer>
- * alphabetically ordered
+ * Anything that will write the counting of symptom data to a destination
  * 
  */
 public interface ISymptomWriter {
-	/**
-	 * 
-	 *
-	 */
-	void saveSymptoms (TreeMap<String, Integer> symptoms);
+/**
+ * 
+ * @param symptoms  Object containing the result of the counting of symptoms 
+ */
+	void saveSymptoms (Object symptoms);
 }
