@@ -1,27 +1,79 @@
 package com.hemebiotech.analytics;
-
-import java.util.List;
-import java.util.TreeMap;
 /**
  * 
  * @author Said
  *
  */
-public class AnalyticsCounter {
-	//public TreeMap<String, Integer> symptoms = new TreeMap<>();
+public class AnalyticsCounter  {
+	private ISymptomReader iSymptomReader = null;	  // used to specify which type of input file 
+	private ISymptomCounter iSymptomCounter = null;	  // used to specify how to count the symptoms
+	private ISymptomWriter iSymptomWriter = null;	  //used to specify which type of output file
 	
-	public static void main(String args[]) throws Exception {
-		
-		// Reading the file symptoms
-		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");		
-		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms();		
-				
-		// Counting the symptoms
-		CountSymptom countSymptom = new CountSymptom();			
-		TreeMap<String, Integer> symptoms = countSymptom.count(listSymptoms);
-
-		// Writing the results in the file "result.out"
-		WriteSymptomDataToFile writeSymptomDataToFile = new WriteSymptomDataToFile("result.out");			
-		writeSymptomDataToFile.saveSymptoms(symptoms);		
+	private String inputPath;
+	private String outputPath;
+	
+	
+	/**
+	 *  Reading , counting , writing
+	 * 
+	 */
+	public void writeAnalysis() {
+		// Writing in the output file,
+		this.iSymptomWriter.saveSymptoms(
+				// the counting of symptoms 
+				this.iSymptomCounter.countSymptoms(
+						// read from the input file.
+						this.iSymptomReader.getSymptoms()
+				)	
+		);
 	}
-}
+	
+	// CONSTRUCTORS
+	public AnalyticsCounter() {
+
+	}	
+
+	public AnalyticsCounter(String inputPath, String outputPath) {
+		this.inputPath = inputPath;
+		this.outputPath = outputPath;
+	}
+		
+	
+	// GETTERS and SETTERS
+	public 	void setISymptomReader(ISymptomReader iSymptomReader) {
+		this.iSymptomReader = iSymptomReader;
+	}
+	public 	ISymptomReader getISymptomReader() {
+		return this.iSymptomReader;
+	}
+	
+	public 	void setISymptomCounter(ISymptomCounter iSymptomCounter) {
+		this.iSymptomCounter = iSymptomCounter;
+	}
+	public 	ISymptomCounter getISymptomCounter() {
+		return this.iSymptomCounter;
+	}
+	
+	public 	void setISymptomWriter(ISymptomWriter iSymptomWriter) {
+		this.iSymptomWriter = iSymptomWriter;
+	}
+	public 	ISymptomWriter getISymptomWriter() {
+		return this.iSymptomWriter;
+	}
+
+	public 	void setInputPath(String inputPath) {
+		this.inputPath = inputPath;
+	}
+	public 	String getinputPath() {
+		return this.inputPath;
+	}
+	
+	public 	void setOutPath(String outputPath) {
+		this.outputPath = outputPath;
+	}
+	public 	String getOutPath() {
+		return this.outputPath;
+	}	
+	
+}       
+
